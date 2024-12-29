@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello There Ping Pong</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Hello There Ping Pong</h1>
+        <button id="ping">Ping</button>
+        <button id="pong">Pong</button>
+        <div class="message" id="message"></div>
+    </div>
+    <script>
+        const messageDiv = document.getElementById('message');
+
+        document.getElementById('ping').addEventListener('click', () => {
+            const message = 'Pong!';
+            messageDiv.textContent = message;
+            saveMessage(message);
+        });
+
+        document.getElementById('pong').addEventListener('click', () => {
+            const message = 'Ping!';
+            messageDiv.textContent = message;
+            saveMessage(message);
+        });
+
+        function saveMessage(message) {
+            fetch('http://localhost:3000/saveMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(err => console.error('Error:', err));
+        }
+    </script>
+</body>
+
+
+</html>
